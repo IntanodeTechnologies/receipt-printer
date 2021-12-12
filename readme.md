@@ -1,10 +1,5 @@
 # Laravel Receipt Printer
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
-
 Simple Laravel package to integrate ESC/POS Print Driver for PHP.
 
 ## Installation
@@ -12,12 +7,8 @@ Simple Laravel package to integrate ESC/POS Print Driver for PHP.
 Via Composer
 
 ``` bash
-$ composer require charlieuki/receiptprinter
+$ composer require intanode/receiptprinter
 ```
-
-## Sample App
-
-I have set up [a simple app](https://github.com/charlieuki/receipt-printer-example) based on Laravel 7 to serve as a demo.
 
 ## Usage
 
@@ -41,7 +32,7 @@ Edit the config file located at `config/receiptprinter.php` as follows:
 Include the library:
 
 ```
-use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
+use Intanode\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 ```
 
 Then use any one of these two functions to send "print" command to the printer.
@@ -57,7 +48,7 @@ printRequest()
 ## Example (Print Receipt)
 
 ```
-use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
+use Intanode\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 
 ...
 
@@ -71,7 +62,6 @@ $store_website = 'yourmart.com';
 $tax_percentage = 10;
 $transaction_id = 'TX123ABC456';
 $currency = 'Rp';
-$image_path = 'logo.png';
 
 // Set items
 $items = [
@@ -128,11 +118,7 @@ $printer->calculateGrandTotal();
 // Set transaction ID
 $printer->setTransactionID($transaction_id);
 
-// Set logo
-// Uncomment the line below if $image_path is defined
-//$printer->setLogo($image_path);
-
-// Set QR code
+// Set qr code
 $printer->setQRcode([
     'tid' => $transaction_id,
 ]);
@@ -144,7 +130,7 @@ $printer->printReceipt();
 ## Example (Print Request)
 
 ```
-use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
+use Intanode\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 
 ...
 
@@ -158,7 +144,6 @@ $store_website = 'yourmart.com';
 $tax_percentage = 10;
 $transaction_id = 'TX123ABC456';
 $currency = 'Rp';
-$image_path = 'logo.png';
 
 // Init printer
 $printer = new ReceiptPrinter;
@@ -179,11 +164,7 @@ $printer->setRequestAmount($request_amount);
 // Set transaction ID
 $printer->setTransactionID($transaction_id);
 
-// Set logo
-// Uncomment the line below if $image_path is defined
-//$printer->setLogo($image_path);
-
-// Set QR code
+// Set qr code
 $printer->setQRcode([
     'tid' => $transaction_id,
     'amount' => $request_amount,
@@ -196,14 +177,6 @@ $printer->printRequest();
 ## Changelog
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [contributing.md](contributing.md) for details and a todolist.
-
-## Problems
-
-If you discover any issues, please post the details on the [issue tracker](https://github.com/charlieuki/receipt-printer/issues).
 
 ## Credits
 
@@ -218,9 +191,5 @@ MIT. Please see the [license file](license.md) for more information.
 [ico-travis]: https://img.shields.io/travis/charlieuki/receiptprinter/master.svg?style=flat-square
 [ico-styleci]: https://styleci.io/repos/12345678/shield
 
-[link-packagist]: https://packagist.org/packages/charlieuki/receiptprinter
-[link-downloads]: https://packagist.org/packages/charlieuki/receiptprinter
-[link-travis]: https://travis-ci.org/charlieuki/receiptprinter
-[link-styleci]: https://styleci.io/repos/12345678
-[link-author]: https://github.com/charlieuki
-[link-contributors]: ../../contributors
+[link-packagist]: https://packagist.org/packages/intanode/receiptprinter
+[link-downloads]: https://packagist.org/packages/intanode/receiptprinter
