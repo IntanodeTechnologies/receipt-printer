@@ -1,15 +1,15 @@
 {
-    "name": "charlieuki/receiptprinter",
+    "name": "intanode/receiptprinter",
     "description": ":description",
     "license": "MIT",
     "authors": [
         {
-            "name": "Charlie Anthony",
-            "email": "charlie@usahakreatif.co.id",
-            "homepage": "http://usahakreatif.co.id"
+            "name": "Obua Emmanuel",
+            "email": "emmanuelo@intanode.co.ug",
+            "homepage": "https://www.emmanuelobua.me"
         }
     ],
-    "homepage": "https://github.com/charlieuki/receiptprinter",
+    "homepage": "https://github.com/IntanodeTechnologies/receipt-printer",
     "keywords": ["Laravel", "ReceiptPrinter"],
     "require": {
         "illuminate/support": ">=7",
@@ -23,21 +23,21 @@
     },
     "autoload": {
         "psr-4": {
-            "charlieuki\\ReceiptPrinter\\": "src/"
+            "Intanode\\ReceiptPrinter\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "charlieuki\\ReceiptPrinter\\Tests\\": "tests"
+            "Intanode\\ReceiptPrinter\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "charlieuki\\ReceiptPrinter\\ReceiptPrinterServiceProvider"
+                "Intanode\\ReceiptPrinter\\ReceiptPrinterServiceProvider"
             ],
             "aliases": {
-                "ReceiptPrinter": "charlieuki\\ReceiptPrinter\\Facades\\ReceiptPrinter"
+                "ReceiptPrinter": "Intanode\\ReceiptPrinter\\Facades\\ReceiptPrinter"
             }
         }
     }
