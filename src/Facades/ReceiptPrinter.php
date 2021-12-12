@@ -1,6 +1,6 @@
 <?php
 
-namespace charlieuki\ReceiptPrinter\Facades;
+namespace Intanode\ReceiptPrinter\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

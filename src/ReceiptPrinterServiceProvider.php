@@ -1,6 +1,6 @@
 <?php
 
-namespace charlieuki\ReceiptPrinter;
+namespace Intanode\ReceiptPrinter;
 
 use Illuminate\Support\ServiceProvider;
 

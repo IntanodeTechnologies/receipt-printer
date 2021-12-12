@@ -1,28 +1,22 @@
 <?php
 
-namespace charlieuki\ReceiptPrinter;
+namespace Intanode\ReceiptPrinter;
 
 class Item
 {
-    private $paper_size;
     private $name;
     private $qty;
     private $price;
-    private $currency = 'Rp';
+    private $currency = 'UGX';
 
     function __construct($name, $qty, $price) {
         $this->name = $name;
         $this->qty = $qty;
         $this->price = $price;
-        $this->paper_size = '57mm';
     }
 
     public function setCurrency($currency) {
         $this->currency = $currency;
-    }
-
-    public function setPaperSize($paper_size) {
-        $this->paper_size = $paper_size;
     }
 
     public function getQty() {
@@ -35,19 +29,11 @@ class Item
 
     public function __toString()
     {
-        switch ($this->paper_size) {
-            case '80mm':
-                $right_cols = 15;
-                $left_cols = 32;
-                break;
-            default:
-                $right_cols = 10;
-                $left_cols = 22;
-                break;
-        }
+        $right_cols = 10;
+        $left_cols = 18;
 
-        $item_price = $this->currency . number_format($this->price, 0, ',', '.');
-        $item_subtotal = $this->currency . number_format($this->price * $this->qty, 0, ',', '.');
+        $item_price = $this->currency . number_format($this->price, 0);
+        $item_subtotal = $this->currency . number_format($this->price * $this->qty, 0);
         
         $print_name = str_pad($this->name, 16) ;
         $print_priceqty = str_pad($item_price . ' x ' . $this->qty, $left_cols);

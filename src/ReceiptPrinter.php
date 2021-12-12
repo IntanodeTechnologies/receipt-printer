@@ -1,9 +1,9 @@
 <?php
 
-namespace charlieuki\ReceiptPrinter;
+namespace Intanode\ReceiptPrinter;
 
-use charlieuki\ReceiptPrinter\Item as Item;
-use charlieuki\ReceiptPrinter\Store as Store;
+use Intanode\ReceiptPrinter\Item as Item;
+use Intanode\ReceiptPrinter\Store as Store;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\CapabilityProfile;
 use Mike42\Escpos\EscposImage;
@@ -44,7 +44,7 @@ class ReceiptPrinter
                 $connector = new NetworkPrintConnector($connector_descriptor);
                 break;
             default:
-                $connector = new FilePrintConnector("php://stdout");
+                $connector = new FilePrintConnector($connector_descriptor);
                 break;
         }
 
@@ -141,9 +141,9 @@ class ReceiptPrinter
 
     public function getPrintableSummary($label, $value, $is_double_width = false) {
         $left_cols = $is_double_width ? 6 : 12;
-        $right_cols = $is_double_width ? 10 : 20;
+        $right_cols = $is_double_width ? 8 : 18;
 
-        $formatted_value = $this->currency . number_format($value, 0, ',', '.');
+        $formatted_value = $this->currency . number_format($value, 0);
 
         return str_pad($label, $left_cols) . str_pad($formatted_value, $right_cols, ' ', STR_PAD_LEFT);
     }
@@ -166,43 +166,19 @@ class ReceiptPrinter
         $this->printer->text($line);
     }
 
-    public function printLogo($mode = 0) {
+    public function printLogo() {
         if ($this->logo) {
-            $this->printImage($this->logo, $mode);
-        }
-    }
+            $image = EscposImage::load($this->logo, false);
 
-    public function printImage($image_path, $mode = 0) {
-        if ($this->printer && $image_path) {
-            $image = EscposImage::load($image_path, false);
-
-            $this->printer->feed();
-
-            switch ($mode) {
-                case 0:
-                    $this->printer->graphics($image);
-                    break;
-                case 1:
-                    $this->printer->bitImage($image);
-                    break;
-                case 2:
-                    $this->printer->bitImageColumnFormat($image);
-                    break;
-            }
-
-            $this->printer->feed();
+            //$this->printer->feed();
+            //$this->printer->bitImage($image);
+            //$this->printer->feed();
         }
     }
 
     public function printQRcode() {
         if (!empty($this->qr_code)) {
             $this->printer->qrCode($this->getPrintableQRcode(), Printer::QR_ECLEVEL_L, 8);
-        }
-    }
-
-    public function openDrawer($pin = 0, $on_duration = 120, $off_duration = 240) {
-        if ($this->printer) {
-            $this->printer->pulse($pin, $on_duration, $off_duration);
         }
     }
 
@@ -224,10 +200,8 @@ class ReceiptPrinter
             $this->printer->setPrintLeftMargin(1);
             // Print receipt headers
             $this->printer->setJustification(Printer::JUSTIFY_CENTER);
-            // Image print mode
-            $image_print_mode = 0; // 0 = auto; 1 = mode 1; 2 = mode 2
             // Print logo
-            $this->printLogo($image_print_mode);
+            $this->printLogo();
             $this->printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
             $this->printer->feed(2);
             $this->printer->text("{$this->store->getName()}\n");
@@ -273,8 +247,6 @@ class ReceiptPrinter
             $this->printer->feed(2);
             // Cut the receipt
             $this->printer->cut();
-            // Open drawer
-            $this->printer->openDrawer();
             $this->printer->close();
         } else {
             throw new Exception('Printer has not been initialized.');
@@ -294,10 +266,12 @@ class ReceiptPrinter
             $this->printer->initialize();
             $this->printer->feed();
             $this->printer->setJustification(Printer::JUSTIFY_CENTER);
-            // Image print mode
-            $image_print_mode = 0; // 0 = auto; 1 = mode 1; 2 = mode 2
             // Print logo
-            $this->printLogo($image_print_mode);
+            $this->printLogo();
+            // Print receipt headers
+            //$this->printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+            //$this->printer->text("U L T I P A Y\n");
+            //$this->printer->feed();
             $this->printer->selectPrintMode();
             $this->printer->text("{$this->store->getName()}\n");
             $this->printer->text("{$this->store->getAddress()}\n");
@@ -331,8 +305,6 @@ class ReceiptPrinter
             $this->printer->feed(2);
             // Cut the receipt
             $this->printer->cut();
-            // Open drawer
-            $this->printer->openDrawer();
             $this->printer->close();
         } else {
             throw new Exception('Printer has not been initialized.');
